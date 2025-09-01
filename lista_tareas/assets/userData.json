@@ -1,14 +1,29 @@
 {
-    "items": [
-        {
-            "title": "Comprar pan",
-            "description": "Pan integral",
-            "done": false
-        },
-        {
-            "title": "Comprar leche",
-            "description": "Leche descremada",
-            "done": true
-        }
-    ]
+  "items": [
+    {
+      "titulo": "Comprar comida",
+      "prioridad": "Alta",
+      "descripcion": "Comprar frutas, verduras y leche"
+    },
+    {
+      "titulo": "Hacer ejercicio",
+      "prioridad": "Media",
+      "descripcion": "Ir al gimnasio 1 hora"
+    },
+    {
+      "titulo": "limpiar la habitacion",
+      "prioridad": "Media",
+      "descripcion": "limpiar la habitacion al levantarse"
+    },
+    {
+      "titulo": "limpiar la habitacion",
+      "prioridad": "Media",
+      "descripcion": "limpiar la habitacion al levantarse"
+    },
+    {
+      "titulo": "limpiar la habitacion",
+      "prioridad": "Media",
+      "descripcion": "limpiar la habitacion al levantarse"
+    }
+  ]
 }

@@ -39,26 +39,28 @@ class _MyHomePageState extends State<MyHomePage> {
   var userData = [];
   int? idu;
 
-  Future<User> getData() async{
-    var url = Uri.https('nekos.best','/api/v2/neko');
+  Future<User> getData() async {
+    var url = Uri.https('crizzvc.github.io', '/apps_Flutter/api.json');
     var response = await http.get(url);
-    if(response.statusCode == 200){
-      User dataa = User(response.body);
+
+    if (response.statusCode == 200) {
+      User dataa = User.fromRawJson(response.body);
+      print('Contenido del JSON: ${response.body}');
       return dataa;
-    }else{
-      throw Exception('error al cargar los datos');
+    } else {
+      throw Exception('Error al cargar los datos');
     }
   }
 
-  Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/userData.json');
-    // print('Contenido del JSON: $response');
-    final jsonLocal = await json.decode(response);
-    setState(() {
-      userData = jsonLocal['items'];
-    });
+  // Future<void> readJson() async {
+  //   final String response = await rootBundle.loadString('assets/userData.json');
+  //   // print('Contenido del JSON: $response');
+  //   final jsonLocal = await json.decode(response);
+  //   setState(() {
+  //     userData = jsonLocal['items'];
+  //   });
 
-  }
+  // }
 
   // Future<User> getInfo() async {
   //   final response = await Dio().get('https://jsonplaceholder.typicode.com/users/${idu}');
@@ -73,14 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
       body: FutureBuilder<User>(
           future: getData(), 
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
@@ -91,16 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return Text('${snapshot.error}');
             } else {
               User data = snapshot.data!;
-              final _screens = [
-                home(),
-                // Page2(data: multiData),
-                // page5(data: userData),
-                // page3(),
-                // page4(),
-                
-              ];
-              
-              return _screens[1];
+
+              return Home(user: data);
+              // return esperando();
             }
           },
       ),

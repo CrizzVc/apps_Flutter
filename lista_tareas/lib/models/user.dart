@@ -1,15 +1,26 @@
 import 'dart:convert';
 
 class User {
-  int? id;
-  String? name;
-  String? email;
-  double? saldo;
-  User(String data) {
-    Map api = jsonDecode(data);
-    this.id = api["id"];
-    this.name = api["name"];
-    this.email = api["email"];
-    this.saldo = api["saldo"] != null ? api["saldo"].toDouble() : 0.0;
+  final String name;
+  final String email;
+  final int saldo;
+
+  User({
+    required this.name,
+    required this.email,
+    required this.saldo,
+  });
+
+  // Constructor factory para crear desde un Map
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json["nombre"],
+      email: json["email"],
+      saldo: int.tryParse(json["saldo"].toString()) ?? 0,
+    );
   }
+
+  // Método auxiliar para crear directamente desde String
+  factory User.fromRawJson(String str) =>
+      User.fromJson(jsonDecode(str));
 }
