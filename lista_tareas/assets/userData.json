@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "title": "Comprar pan",
+            "description": "Pan integral",
+            "done": false
+        },
+        {
+            "title": "Comprar leche",
+            "description": "Leche descremada",
+            "done": true
+        }
+    ]
+}
