@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- Header ---
+            // Header 
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // --- Texto "Tareas" con margen izquierdo ---
+            // Texto "Tareas" 
             const Padding(
               padding: EdgeInsets.only(left: 16.0),
               child: Text('Tareas',
@@ -80,7 +80,6 @@ class Home extends StatelessWidget {
 
             const SizedBox(height: 10),
 
-            // --- Lista de tareas ---
             Expanded(
               child: FutureBuilder<List<Tarea>>(
                 future: cargarTareas(),
@@ -110,7 +109,7 @@ class Home extends StatelessWidget {
   }
 }
 
-// --- Widget con hover ---
+// cards de tareas
 class _TareaCard extends StatefulWidget {
   final Tarea tarea;
   final int index;

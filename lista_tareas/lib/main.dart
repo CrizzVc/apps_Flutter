@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'models/user.dart';
 import 'widgets/home.dart';
@@ -51,24 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
       throw Exception('Error al cargar los datos');
     }
   }
-
-  // Future<void> readJson() async {
-  //   final String response = await rootBundle.loadString('assets/userData.json');
-  //   // print('Contenido del JSON: $response');
-  //   final jsonLocal = await json.decode(response);
-  //   setState(() {
-  //     userData = jsonLocal['items'];
-  //   });
-
-  // }
-
-  // Future<User> getInfo() async {
-  //   final response = await Dio().get('https://jsonplaceholder.typicode.com/users/${idu}');
-  //   var data = response.data;
-  //   User userInfo = new User(data);
-  //   return userInfo;
-  // }
-
 
   void _incrementCounter() {
     setState(() {
