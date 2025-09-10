@@ -9,31 +9,64 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Detalles del usuario")),
+      appBar: AppBar(title: Text("Perfil de ${user.nombre}")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Nombre: ${user.nombre}", style: TextStyle(fontSize: 18)),
+            // Datos principales del usuario
+            Text("Nombre: ${user.nombre}", style: const TextStyle(fontSize: 18)),
             Text("Email: ${user.email}"),
             Text("Edad: ${user.edad}"),
             Text("País: ${user.pais}"),
-            Text("Cédula: ${user.cedula}"),
             const SizedBox(height: 20),
-            Text("Vehículos", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            ...user.vehiculos.map((v) => Card(
-                  child: ListTile(
-                    leading: v.fotoUrl != null
-                        ? Image.network(v.fotoUrl!, width: 50, height: 50, fit: BoxFit.cover)
-                        : Icon(Icons.directions_car),
-                    title: Text("${v.marca} ${v.modelo}"),
-                    subtitle: Text("Placa: ${v.placa} | Año: ${v.anio} | Color: ${v.color}"),
-                  ),
-                )),
+
+            const Text("Vehículos:",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+
+            // Lista de vehículos con tarjetas
+            Expanded(
+              child: ListView(
+                children: user.vehiculos.map((v) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(12),
+                      leading: v.fotoUrl != null && v.fotoUrl!.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              v.fotoUrl!,
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.directions_car, size: 40, color: Colors.blue);
+                              },
+                            ),
+                          )
+                        : const Icon(Icons.directions_car, size: 40, color: Colors.blue),
+
+                      title: Text("${v.marca} ${v.modelo}",
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text(
+                        "Placa: ${v.placa}\nAño: ${v.anio} | Color: ${v.color}",
+                      ),
+                      isThreeLine: true,
+                    ),
+                  );
+                }).toList(),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
-
