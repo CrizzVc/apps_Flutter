@@ -16,7 +16,6 @@ class UserPage extends StatelessWidget {
           children: [
             Text("Nombre: ${user.nombre}", style: TextStyle(fontSize: 18)),
             Text("Email: ${user.email}"),
-            Text("Saldo: ${user.saldo}"),
             Text("Edad: ${user.edad}"),
             Text("País: ${user.pais}"),
             Text("Cédula: ${user.cedula}"),
@@ -24,6 +23,9 @@ class UserPage extends StatelessWidget {
             Text("Vehículos", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             ...user.vehiculos.map((v) => Card(
                   child: ListTile(
+                    leading: v.fotoUrl != null
+                        ? Image.network(v.fotoUrl!, width: 50, height: 50, fit: BoxFit.cover)
+                        : Icon(Icons.directions_car),
                     title: Text("${v.marca} ${v.modelo}"),
                     subtitle: Text("Placa: ${v.placa} | Año: ${v.anio} | Color: ${v.color}"),
                   ),

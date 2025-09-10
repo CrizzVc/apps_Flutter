@@ -12,14 +12,16 @@
         "marca": "nissan",
         "modelo": "gtr",
         "anio": "2024",
-        "color": "negro"
+        "color": "negro",
+        "fotoUrl": "https://cdn.motor1.com/images/mgl/vxobN4/s3/3__large_.webp"
       },
       {
         "placa": "god123",
         "marca": " Toyota",
         "modelo": "supra",
         "anio": "1998",
-        "color": "blanco"
+        "color": "blanco",
+        "fotoUrl": "http://ww.90sczechroads.cz/wp-content/uploads/2021/03/906C6401-C28F-44B6-945A-5D3880402932-1500x800.jpeg"
       }
     ]
   },
@@ -36,7 +38,8 @@
         "marca": "Honda",
         "modelo": "Civic",
         "anio": "2019",
-        "color": "Gris"
+        "color": "Gris",
+        "fotoUrl": "https://carfiable.mx/wp-content/uploads/2024/05/PXL_20250125_215947042-1024x576.jpg"
       }
     ]
   }

@@ -17,7 +17,7 @@ class Busqueda extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16.0),
         width: 350,
-        height: 400,
+        height: 200,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.blueAccent),
           borderRadius: BorderRadius.circular(12),
@@ -25,7 +25,6 @@ class Busqueda extends StatelessWidget {
         child: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
             if (state is UserLoaded) {
-              // 👇 Navegar a la nueva pantalla
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -33,7 +32,6 @@ class Busqueda extends StatelessWidget {
                 ),
               );
             } else if (state is UserError) {
-              // 👇 Mostrar error con SnackBar
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
               );
@@ -59,7 +57,6 @@ class Busqueda extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // 👇 Aquí en lugar de UserPage mostramos solo el loader o mensaje inicial
               Expanded(
                 child: BlocBuilder<UserBloc, UserState>(
                   builder: (context, state) {
@@ -68,7 +65,6 @@ class Busqueda extends StatelessWidget {
                     } else if (state is UserLoading) {
                       return loader();
                     }
-                    // No mostramos nada más aquí porque UserLoaded lo maneja el BlocListener
                     return const SizedBox.shrink();
                   },
                 ),

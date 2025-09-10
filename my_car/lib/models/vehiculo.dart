@@ -4,6 +4,7 @@ class Vehiculo {
   final String modelo;
   final String anio;
   final String color;
+  final String? fotoUrl;
 
   Vehiculo({
     required this.placa,
@@ -11,6 +12,7 @@ class Vehiculo {
     required this.modelo,
     required this.anio,
     required this.color,
+    this.fotoUrl,
   });
 
   factory Vehiculo.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Vehiculo {
       modelo: json['modelo'],
       anio: json['anio'],
       color: json['color'],
+      fotoUrl: json['fotoUrl'],
     );
   }
 }

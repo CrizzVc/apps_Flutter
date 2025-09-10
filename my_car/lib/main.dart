@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: Busqueda(), // 👈 Ahora Busqueda ya tiene un UserBloc arriba
+      body: Busqueda(),
     );
   }
 }
