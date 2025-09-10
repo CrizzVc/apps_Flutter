@@ -1,5 +1,8 @@
 {
     "email":"cristianviana.c@gmail.com",
     "nombre":"cristian",
-    "saldo":"10000"
+    "saldo":"10000",
+    "edad":"20",
+    "pais":"Colombia",
+    "cedula":"1139424381"
 }
