@@ -4,6 +4,7 @@ import '../blocs/user_bloc.dart';
 import '../blocs/user_state.dart';
 import '../blocs/user_events.dart';
 import '../pages/user_pages.dart';
+import '../views/loader.dart';
 
 class Busqueda extends StatelessWidget {
   Busqueda({super.key});
@@ -21,47 +22,59 @@ class Busqueda extends StatelessWidget {
           border: Border.all(color: Colors.blueAccent),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: cedulaController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Ingrese su cédula',
+        child: BlocListener<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state is UserLoaded) {
+              // 👇 Navegar a la nueva pantalla
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserPage(user: state.user),
+                ),
+              );
+            } else if (state is UserError) {
+              // 👇 Mostrar error con SnackBar
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+            }
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                controller: cedulaController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Ingrese su cédula',
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final cedula = cedulaController.text.trim();
-                context.read<UserBloc>().add(FetchUserByCedula(cedula));
-              },
-              child: const Text('Buscar'),
-            ),
-            const SizedBox(height: 20),
-
-            // 👇 Aquí escuchamos el bloc
-            Expanded(
-              child: BlocBuilder<UserBloc, UserState>(
-                builder: (context, state) {
-                  if (state is UserInitial) {
-                    return const Text("Ingrese una cédula para buscar");
-                  } else if (state is UserLoading) {
-                    return const CircularProgressIndicator();
-                  } else if (state is UserLoaded) {
-                    return UserPage(user: state.user); // 👈 Mostramos los datos
-                  } else if (state is UserError) {
-                    return Text(
-                      state.message,
-                      style: const TextStyle(color: Colors.red),
-                    );
-                  }
-                  return const SizedBox.shrink();
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final cedula = cedulaController.text.trim();
+                  context.read<UserBloc>().add(FetchUserByCedula(cedula));
                 },
+                child: const Text('Buscar'),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+
+              // 👇 Aquí en lugar de UserPage mostramos solo el loader o mensaje inicial
+              Expanded(
+                child: BlocBuilder<UserBloc, UserState>(
+                  builder: (context, state) {
+                    if (state is UserInitial) {
+                      return const Text("Ingrese una cédula para buscar");
+                    } else if (state is UserLoading) {
+                      return loader();
+                    }
+                    // No mostramos nada más aquí porque UserLoaded lo maneja el BlocListener
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

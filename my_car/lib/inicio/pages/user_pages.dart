@@ -1,14 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../blocs/user_bloc.dart';
-import '../blocs/user_state.dart';
-import '../blocs/user_events.dart';
-
-import '../views/busqueda.dart';
-import '../views/loader.dart';
-
-import 'package:flutter/material.dart';
 import '../../models/user.dart';
 
 class UserPage extends StatelessWidget {

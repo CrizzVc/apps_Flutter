@@ -20,17 +20,28 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    final vehiculosJson = json['vehiculos'] as List;
-    final vehiculos = vehiculosJson.map((v) => Vehiculo.fromJson(v)).toList();
-
     return User(
-      email: json['email'],
-      nombre: json['nombre'],
-      saldo: json['saldo'],
-      edad: json['edad'],
-      pais: json['pais'],
-      cedula: json['cedula'],
-      vehiculos: vehiculos,
+      email: json["email"],
+      nombre: json["nombre"],
+      saldo: json["saldo"],
+      edad: json["edad"],
+      pais: json["pais"],
+      cedula: json["cedula"],
+      vehiculos: (json["vehiculos"] as List<dynamic>)
+          .map((v) => Vehiculo.fromJson(v))
+          .toList(),
+    );
+  }
+
+  factory User.empty() {
+    return User(
+      email: "",
+      nombre: "",
+      saldo: "",
+      edad: "",
+      pais: "",
+      cedula: "",
+      vehiculos: [],
     );
   }
 }

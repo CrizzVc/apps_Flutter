@@ -17,15 +17,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         );
 
         if (response.statusCode == 200) {
-          final data = json.decode(response.body);
+          final List<dynamic> data = json.decode(response.body);
 
-          final user = User.fromJson(data);
+          final users = data.map((u) => User.fromJson(u)).toList();
 
-          // si quieres filtrar por cedula:
-          if (user.cedula == event.cedula) {
+          // Buscar por cédula
+          final user = users.firstWhere(
+            (u) => u.cedula == event.cedula,
+            orElse: () => User.empty(),
+          );
+
+          if (user.cedula.isNotEmpty) {
             emit(UserLoaded(user));
           } else {
-            emit(UserError("No existe usuario con cédula ${event.cedula}"));
+            emit(UserError("No se encontró usuario con cédula ${event.cedula}"));
           }
         } else {
           emit(UserError("Error en la API: ${response.statusCode}"));
@@ -34,5 +39,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserError("Error: $e"));
       }
     });
+
+
   }
 }

@@ -1,13 +1,26 @@
 [
   {
-    "email": "cristian@mail.com",
+    "email": "cristianviana.c@gmail.com",
     "nombre": "Cristian",
     "saldo": "10000",
     "edad": "20",
     "pais": "Colombia",
     "cedula": "1139424381",
     "vehiculos": [
-      { "placa": "ABC123", "marca": "Toyota", "modelo": "Corolla", "anio": "2020", "color": "Blanco" }
+      {
+        "placa": "ABC123",
+        "marca": "nissan",
+        "modelo": "gtr",
+        "anio": "2024",
+        "color": "negro"
+      },
+      {
+        "placa": "god123",
+        "marca": " Toyota",
+        "modelo": "supra",
+        "anio": "1998",
+        "color": "blanco"
+      }
     ]
   },
   {
@@ -18,7 +31,13 @@
     "pais": "México",
     "cedula": "987654321",
     "vehiculos": [
-      { "placa": "XYZ789", "marca": "Honda", "modelo": "Civic", "anio": "2019", "color": "Gris" }
+      {
+        "placa": "XYZ789",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "anio": "2019",
+        "color": "Gris"
+      }
     ]
   }
 ]
