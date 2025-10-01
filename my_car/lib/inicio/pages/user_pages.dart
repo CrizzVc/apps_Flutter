@@ -3,89 +3,143 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_car/inicio/blocs/user_bloc.dart';
 import '../../models/user.dart';
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
   final User user;
 
   const UserPage({super.key, required this.user});
 
   @override
+  State<UserPage> createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
+  bool _loadingVehiculos = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Simular delay de 2 segundos para cargar vehículos
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _loadingVehiculos = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = widget.user;
+
     return Scaffold(
       appBar: AppBar(title: Text("Perfil de ${user.nombre}")),
-      body: BlocProvider(
-        create: (context) => UserBloc(),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Datos principales del usuario
-              Text(
-                "Nombre: ${user.nombre}",
-                style: const TextStyle(fontSize: 18),
-              ),
-              Text("Email: ${user.email}"),
-              Text("Edad: ${user.edad}"),
-              Text("País: ${user.pais}"),
-              const SizedBox(height: 20),
+      body: Column(
+        children: [
+          // Imagen random (no depende de user)
+          Container(
+            width: double.infinity,
+            height: 200,
+            color: Colors.grey[200],
+            child: Image.network(
+              "https://www.elcarrocolombiano.com/wp-content/uploads/2021/04/Diseno-sin-titulo-4-4.jpg",
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.image, size: 80, color: Colors.grey),
+            ),
+          ),
 
-              const Text(
-                "Vehículos:",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
+          BlocProvider(
+            create: (context) => UserBloc(),
+            child: Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Datos principales del usuario
+                    Text(
+                      "Nombre: ${user.nombre}",
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    Text("Email: ${user.email}"),
+                    Text("Edad: ${user.edad}"),
+                    Text("País: ${user.pais}"),
+                    const SizedBox(height: 20),
 
-              // Lista de vehículos con tarjetas
-              Expanded(
-                child: ListView(
-                  children: user.vehiculos.map((v) {
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    const Text(
+                      "Vehículos:",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(12),
-                        leading: v.fotoUrl != null && v.fotoUrl!.isNotEmpty
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  v.fotoUrl!,
-                                  width: 60,
-                                  height: 60,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Icon(
-                                      Icons.directions_car,
-                                      size: 40,
-                                      color: Colors.blue,
-                                    );
-                                  },
-                                ),
-                              )
-                            : const Icon(
-                                Icons.directions_car,
-                                size: 40,
-                                color: Colors.blue,
-                              ),
+                    ),
+                    const SizedBox(height: 10),
 
-                        title: Text(
-                          "${v.marca} ${v.modelo}",
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          "Placa: ${v.placa}\nAño: ${v.anio} | Color: ${v.color}",
-                        ),
-                        isThreeLine: true,
-                      ),
-                    );
-                  }).toList(),
+                    // Mostrar loader o lista de vehículos
+                    _loadingVehiculos
+                        ? const Expanded(
+                            child: Center(child: CircularProgressIndicator()),
+                          )
+                        : Expanded(
+                            child: ListView(
+                              children: user.vehiculos.map((v) {
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 8,
+                                  ),
+                                  elevation: 3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.all(12),
+                                    leading:
+                                        v.fotoUrl != null &&
+                                            v.fotoUrl!.isNotEmpty
+                                        ? ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
+                                            child: Image.network(
+                                              v.fotoUrl!,
+                                              width: 60,
+                                              height: 60,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                    return const Icon(
+                                                      Icons.directions_car,
+                                                      size: 40,
+                                                      color: Colors.blue,
+                                                    );
+                                                  },
+                                            ),
+                                          )
+                                        : const Icon(
+                                            Icons.directions_car,
+                                            size: 40,
+                                            color: Colors.blue,
+                                          ),
+                                    title: Text(
+                                      "${v.marca} ${v.modelo}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "Placa: ${v.placa}\nAño: ${v.anio} | Color: ${v.color}",
+                                    ),
+                                    isThreeLine: true,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
